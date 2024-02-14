@@ -15,7 +15,7 @@ export default function HomeView() {
   const [loader, setLoader] = useState(true)
 
   useEffect(() => {
-    if (incomes && spends) {
+    if (incomes.length && spends.length) {
       setLoader(false)
       return
     }
@@ -24,8 +24,8 @@ export default function HomeView() {
       const loadIncomes = await dbService.getData("Incomes")
       const loadSpends = await dbService.getData("Spends")
       console.log(loadIncomes)
-      setIncomes(loadIncomes)
-      setSpends(loadSpends)
+      if (loadIncomes !== undefined) setIncomes(loadIncomes)
+      if (loadSpends !== undefined) setSpends(loadSpends)
       setLoader(false)
     }
     fetchData()
@@ -33,7 +33,8 @@ export default function HomeView() {
 
 
   useEffect(() => {
-    if (incomes && spends) {
+    if (incomes.length && spends.length) {
+
       const incomesWallet = incomes.reduce((total, income) => total + parseInt(income.price), 0);
       const spendsWallet = spends.reduce((total, spend) => total + parseInt(spend.price), 0);
       const enlistedWallet = spends.reduce((total, spend) => total + parseInt(spend.enlisted), 0);

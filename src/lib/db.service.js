@@ -14,7 +14,8 @@ const BASE_URL = process.env.NODE_ENV === 'production'
 async function getData(dbName) {
   try {
     const apiUrl = BASE_URL + 'get-data'
-    const response = await axios.get(apiUrl, {
+    // const response = await axios.get(apiUrl, {
+    const response = await axios.post(apiUrl, {
       params: {
         dbName
       }

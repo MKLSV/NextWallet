@@ -1,10 +1,12 @@
 import clientPromise from "../../../lib/mongodb";
 import { NextResponse } from "next/server";
 
-export async function  GET(request, res) {
+export async function  POST(request, res) {
     try {
-        const { searchParams } = new URL(request.url)
-        const collectionName = searchParams.get('dbName')
+        const req = await request.json();
+        // const { searchParams } = new URL(request.url)
+        // const collectionName = searchParams.get('dbName')
+        const collectionName = req.params.dbName
         const client = await clientPromise;
         const db = client.db("WalletDB");
         const collection = await db.collection(collectionName)

@@ -15,7 +15,7 @@ export default function HomeView() {
   const [loader, setLoader] = useState(true)
 
   useEffect(() => {
-    if (incomes.length && spends.length) {
+    if (incomes && spends) {
       setLoader(false)
       return
     }
@@ -33,7 +33,7 @@ export default function HomeView() {
 
 
   useEffect(() => {
-    if (incomes.length && spends.length) {
+    if (incomes && spends) {
       const incomesWallet = incomes.reduce((total, income) => total + parseInt(income.price), 0);
       const spendsWallet = spends.reduce((total, spend) => total + parseInt(spend.price), 0);
       const enlistedWallet = spends.reduce((total, spend) => total + parseInt(spend.enlisted), 0);

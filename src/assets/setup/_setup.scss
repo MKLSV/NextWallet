@@ -1,0 +1,13 @@
+html,body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    height: -webkit-fill-availabel;
+}
+body{
+    background-color: $clr1;
+    font-family: Arial, Helvetica, sans-serif;
+    // min-height: 100dvh;
+    // width: 100dvw;
+}

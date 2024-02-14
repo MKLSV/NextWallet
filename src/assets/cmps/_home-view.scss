@@ -1,0 +1,105 @@
+.home-view {
+  display: grid;
+  height: 100%;
+  grid-template-rows: 10% 60% 30%;
+
+  .app-header {
+    display: flex;
+    justify-content: space-around;
+    align-items: end;
+    
+
+    a {
+      text-decoration: none;
+      font-size: 5em;
+      border-bottom: 4px solid;
+      font-weight: 700;
+
+      &.incomes {
+        color: $clr4;
+        border-color: $clr4;
+      }
+      &.spends {
+        color: $clr3;
+        border-color: $clr3;
+      }
+    }
+  }
+
+  .wallet-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    align-items: center;
+    font-size: 4em;
+    gap: 30px;
+    padding: 0 15vw;
+    color: $clr4;
+    // font-weight: 500;
+
+    .wallet {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: space-between;
+      gap: 5vw;
+
+      button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 15vw;
+        width: 15vw;
+        border-radius: 50%;
+        border: none;
+        box-shadow: 0 0 20px -5px black;
+        font-size: 2em;
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+
+        &.add-income {
+          color: $clr4;
+        }
+        &.add-spend {
+          background-color: $clr3;
+          color: white;
+        }
+      }
+    }
+    .wallet-bar {
+      width: 100%;
+      height: 15%;
+      border: 1px solid $clr4;
+      background-color: #fff;
+      box-shadow: 0 0 20px -5px black;
+      border-radius: 50px;
+      display: flex;
+
+      // justify-content: space-between;
+      .income-bar {
+        background-color: $clr4;
+        height: 100%;
+        width: 40%;
+        border-top-left-radius: 50px;
+        border-bottom-left-radius: 50px;
+      }
+      .middle-bar {
+        height: 100%;
+        width: 10%;
+        background-color: inherit;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #ffffff;
+        box-shadow:  0 0 20px 0px black;
+
+      }
+      .spend-bar {
+        background-color: $clr3;
+        height: 100%;
+        width: 60%;
+        border-top-right-radius: 50px;
+        border-bottom-right-radius: 50px;
+      }
+    }
+  }
+}

@@ -1,0 +1,84 @@
+.add-modal {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100dvh;
+  width: 100vw;
+  background-color: #373737b8;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .add-form {
+    background-color: #ffffff;
+    padding: 5%;
+    margin: 0 5%;
+    box-shadow: 0 0 1% -4px black;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    position: relative;
+    z-index: 1000;
+    font-size: 70px;
+    // height: 60%;
+    color: #131314f4;
+
+    input {
+      border: none;
+      height: 5vh;
+      padding: 2vw;
+      border-radius: 5px;
+      font-size: 50px;
+
+      &:focus {
+        background-color: #781f9e2e;
+        outline: white;
+      }
+      &.disabled {
+        background-color: #98989892;
+      }
+    }
+    button {
+      height: 5vh;
+      border-radius: 10px;
+      border: none;
+      box-shadow: 0 0 10px -4px black;
+      cursor: pointer;
+      font-size: 50px;
+      &:active {
+        background-color: #cac0d768;
+        box-shadow: 0 0 0px -4px black;
+      }
+    }
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 25px;
+    }
+    .error {
+      transition: 0.3s;
+      color: rgba(255, 0, 51, 0.63);
+    }
+    .check {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      margin-left: 20px;
+      // cursor: pointer;
+    }
+    
+    input[type="checkbox"] {
+        /* Double-sized Checkboxes */
+        -ms-transform: scale(4); /* IE */
+        -moz-transform: scale(4); /* FF */
+        -webkit-transform: scale(4); /* Safari and Chrome */
+        -o-transform: scale(4); /* Opera */
+        transform: scale(4);
+        padding: 10px;
+      }
+  }
+}

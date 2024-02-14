@@ -9,8 +9,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 1.5em;
   overflow: hidden;
-  font-size: 60px;
 
   .item-info {
     background-color: #ffffff;
@@ -68,7 +68,7 @@
       background-color: #ae95c3;
       box-shadow: 0 0 11px 1px black;
       color: white;
-      font-size: 60px;
+      font-size: 1.5em;
       &:active {
         background-color: #946eb4;
       }
@@ -99,26 +99,28 @@
     .delete-modal {
       position: absolute;
       height: 10vh;
-      background-color: #fffefe;
-      border: 12px solid rgb(255, 89, 0);
+      background-color: #ffffff;
+      border: 2px solid rgb(94, 94, 94);
       display: flex;
       flex-direction: column;
       justify-content: space-around;
       align-items: center;
       border-radius: 10px;
       width: 100%;
-      top: -150%;
-      left: -10px;
+      // top: 80%;
+      left: 0;
       transition: 0.5s ease;
+      opacity: 0;
       &.active {
-        top: 50%;
+        opacity: 1;
+        // top: 50%;
       }
       .delete-modal-btns {
         display: flex;
         justify-content: space-around;
         width: 100%;
         button {
-          font-size: 60px;
+          font-size: 1em;
           width: 35%;
           height: 4vh;
           border-radius: 5px;

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
-import dollar from '../assets/dollar.png'
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 // // ChartJS.defaults.font.size = 50;

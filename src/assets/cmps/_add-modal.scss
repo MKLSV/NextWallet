@@ -9,12 +9,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 
   .add-form {
     background-color: #ffffff;
     padding: 5%;
-    margin: 0 5%;
-    box-shadow: 0 0 1% -4px black;
+    // margin: 0 5%;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -22,7 +22,7 @@
     gap: 5px;
     position: relative;
     z-index: 1000;
-    font-size: 70px;
+    font-size: 1em;
     // height: 60%;
     color: #131314f4;
 
@@ -31,7 +31,7 @@
       height: 5vh;
       padding: 2vw;
       border-radius: 5px;
-      font-size: 50px;
+      font-size: 1.5em;
 
       &:focus {
         background-color: #781f9e2e;
@@ -47,7 +47,7 @@
       border: none;
       box-shadow: 0 0 10px -4px black;
       cursor: pointer;
-      font-size: 50px;
+      font-size: 1.5em;
       &:active {
         background-color: #cac0d768;
         box-shadow: 0 0 0px -4px black;
@@ -68,16 +68,17 @@
       align-items: center;
       gap: 30px;
       margin-left: 20px;
+      font-size: 1.5em;
       // cursor: pointer;
     }
     
     input[type="checkbox"] {
         /* Double-sized Checkboxes */
-        -ms-transform: scale(4); /* IE */
-        -moz-transform: scale(4); /* FF */
-        -webkit-transform: scale(4); /* Safari and Chrome */
-        -o-transform: scale(4); /* Opera */
-        transform: scale(4);
+        -ms-transform: scale(3); /* IE */
+        -moz-transform: scale(3); /* FF */
+        -webkit-transform: scale(3); /* Safari and Chrome */
+        -o-transform: scale(3); /* Opera */
+        transform: scale(3);
         padding: 10px;
       }
   }

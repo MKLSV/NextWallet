@@ -31,13 +31,13 @@ export function SelectedSpendModal({ setLoader, setSelectedSpend, selectedSpend,
             setNewEnliste(parseInt(value))
         }
     }
-    async function saveChanges() {
+    async function saveChanges(itemToSave = editedItem) {
         setEditItem(false)
-        setLoader(true) 
-        console.log(editedItem)
-        await dbService.updateData(editedItem, 'Spends')
+        setLoader(true)
+        console.log(itemToSave)
+        await dbService.updateData(itemToSave, 'Spends')
         const updatedSpends = spendsToUpdate.map(spend =>
-            spend._id === editedItem._id ? { ...editedItem } : spend
+            spend._id === itemToSave._id ? { ...itemToSave } : spend
         );
         setSpends(updatedSpends)
         setLoader(false)
@@ -53,10 +53,11 @@ export function SelectedSpendModal({ setLoader, setSelectedSpend, selectedSpend,
     }
 
     async function addNewEnliste() {
-        const newEditedItem = { ...editedItem, enlisted: parseInt(editedItem.price), date: 'done' }
+        const newEditedItem = { ...editedItem, enlisted: parseInt(editedItem.price), date: 'done', closeAt: Date.now()}
         setEditedItem(newEditedItem)
-        saveChanges()
+        saveChanges(newEditedItem)
     }
+    console.log(editedItem)
 
     return (
         <div className="item-modal" onClick={() => setSelectedSpend(null)}>
@@ -82,15 +83,15 @@ export function SelectedSpendModal({ setLoader, setSelectedSpend, selectedSpend,
                     <label>Уже зачисленно</label>
                     <span>{editedItem.enlisted}</span>
                 </div> */}
-                    <div className="item">
-                        <label>Число</label>
-                        {editItem ?
-                            <input type="date" id="date" value={editedItem.date} onChange={(e) => handleChange(e)} />
-                            :
-                            <span>{editedItem.date}</span>
-                        }
-                    </div>
-                   
+                <div className="item">
+                    <label>Число</label>
+                    {editItem ?
+                        <input type="date" id="date" value={editedItem.date} onChange={(e) => handleChange(e)} />
+                        :
+                        <span>{editedItem.date}</span>
+                    }
+                </div>
+
                 <button className="add-spend-btn" onClick={addNewEnliste}>Выполнено</button>
 
                 {editItem ?

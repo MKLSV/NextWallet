@@ -41,6 +41,8 @@ async function updateData(data, dbName) {
   try {
     const apiUrl = BASE_URL + 'update-data'
     console.log(apiUrl)
+    console.log(data)
+    console.log(dbName)
     await axios.post(apiUrl, { params: { data, dbName } });
     console.log('DATA ADDED')
   } catch (error) {

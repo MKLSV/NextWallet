@@ -31,15 +31,22 @@ export function SelectedSpendModal({ setLoader, setSelectedSpend, selectedSpend,
             setNewEnliste(parseInt(value))
         }
     }
-    async function saveChanges(itemToSave = editedItem) {
+    async function saveChanges(itemToSave, type) {
         setEditItem(false)
         setLoader(true)
-        console.log(itemToSave)
-        await dbService.updateData(itemToSave, 'Spends')
-        const updatedSpends = spendsToUpdate.map(spend =>
-            spend._id === itemToSave._id ? { ...itemToSave } : spend
-        );
-        setSpends(updatedSpends)
+        if(type === 'enliste'){
+            await dbService.updateData(itemToSave, 'Spends')
+            const updatedSpends = spendsToUpdate.map(spend =>
+                spend._id === itemToSave._id ? { ...itemToSave } : spend
+            );
+            setSpends(updatedSpends)
+        }else {
+            await dbService.updateData(editedItem, 'Spends')
+            const updatedSpends = spendsToUpdate.map(spend =>
+                spend._id === editedItem._id ? { ...editedItem } : spend
+            );
+            setSpends(updatedSpends)
+        }
         setLoader(false)
         setSelectedSpend(null)
     }
@@ -55,7 +62,7 @@ export function SelectedSpendModal({ setLoader, setSelectedSpend, selectedSpend,
     async function addNewEnliste() {
         const newEditedItem = { ...editedItem, enlisted: parseInt(editedItem.price), date: 'done', closeAt: Date.now()}
         setEditedItem(newEditedItem)
-        saveChanges(newEditedItem)
+        saveChanges(newEditedItem, 'enliste')
     }
     console.log(editedItem)
 

@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { PieChart } from "../components/PieChart";
 import { Loader } from "../components/Loader";
 import { AddModal } from "../components/addModal.jsx";
+import axios from "axios";
 
 export default function HomeView() {
   const [wallet, setWallet] = useState({ wallet: 0, spendsCount: 0, incomesCount: 0 })
@@ -41,6 +42,20 @@ export default function HomeView() {
       setWallet({ wallet: incomesWallet - enlistedWallet, spendsCount: spendsWallet, incomesCount: incomesWallet })
     }
   }, [incomes, spends])
+
+  useEffect(() => {
+    // Создаем интервал с повторением каждую минуту (60000 миллисекунд)
+    const interval = setInterval(() => {
+      // Здесь можно разместить ваш код, который нужно выполнить каждую минуту
+      axios.post('https://api.telegram.org/bot6587081386:AAEFpKmoTbj52EpWirs8WTN33I4VCqC6fdw/sendMessage?chat_id=555207329&text=Привет')
+      console.log('Функция повторяется каждую минуту');
+    }, 10000);
+
+    // Очищаем интервал при размонтировании компонента
+    // return () => {
+    //   clearInterval(interval);
+    // };
+  }, []);
 
   function calculateProcent(type) {
     if (type === 'income') {

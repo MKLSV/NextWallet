@@ -1,8 +1,8 @@
 import clientPromise from "../../../lib/mongodb";
-// import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import axios from "axios";
 // 0 12 * * *
-export default async function handler(req, res) {
+export default async function GET() {
     const url = 'https://api.telegram.org/bot6587081386:AAEFpKmoTbj52EpWirs8WTN33I4VCqC6fdw/sendMessage?chat_id=555207329&text=';
     try {
         const collectionName = 'Spends'

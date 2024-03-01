@@ -2,7 +2,7 @@ import clientPromise from "../../../lib/mongodb";
 import { NextResponse } from "next/server";
 import axios from "axios";
 // 0 12 * * *
-export async function GET() {
+export default async function handler(req, res) {
     const url = 'https://api.telegram.org/bot6587081386:AAEFpKmoTbj52EpWirs8WTN33I4VCqC6fdw/sendMessage?chat_id=555207329&text=';
     try {
         const collectionName = 'Spends'
@@ -41,10 +41,10 @@ export async function GET() {
             await axios.get(url + message[i])
 
         }
-        return NextResponse.json(message)
+        // return NextResponse.json(message)
 
     } catch (err) {
         console.error('cannot insert data', err)
-        throw err
+        // throw err
     }
 };

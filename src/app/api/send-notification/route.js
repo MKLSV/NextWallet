@@ -1,5 +1,5 @@
 import clientPromise from "../../../lib/mongodb";
-import { NextResponse } from "next/server";
+// import { NextResponse } from "next/server";
 import axios from "axios";
 // 0 12 * * *
 export default async function handler(req, res) {

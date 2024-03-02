@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import dbService from "../lib/db.service";
-import messageService from '../lib/message.service'
 import Link from 'next/link'
 import { PieChart } from "../components/PieChart";
 import { Loader } from "../components/Loader";

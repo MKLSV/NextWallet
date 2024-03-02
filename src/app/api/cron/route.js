@@ -1,8 +1,8 @@
-import clientPromise from "../../lib/mongodb";
-import { NextResponse } from "next/server";
+import clientPromise from "../../../lib/mongodb";
+// import { NextResponse } from "next/server";
 import axios from "axios";
 // 0 12 * * *
-export default async function handler() {
+export async function GET() {
     const url = 'https://api.telegram.org/bot6587081386:AAEFpKmoTbj52EpWirs8WTN33I4VCqC6fdw/sendMessage?chat_id=555207329&text=';
     try {
         const collectionName = 'Spends'
@@ -35,13 +35,22 @@ export default async function handler() {
         });
 
 
-        await axios.get(url + 'Гуд Морнинг')
-        await axios.get(url + 'Вот что нужно оплатить на ближайшие 7 дней')
+        await axios.post(url + 'Гуд Морнинг')
+        await axios.post(url + 'Вот что нужно оплатить на ближайшие 7 дней')
         for (let i = 0; i < message.length; i++) {
-            await axios.get(url + message[i])
+            await axios.post(url + message[i])
 
         }
-        return NextResponse.json({ ok: true });
+        const result = await fetch(
+            'http://worldtimeapi.org/api/timezone/America/Chicago',
+            {
+                cache: 'no-store',
+            },
+        );
+        const resData = await result.json();
+
+        return Response.json({ datetime: resData.datetime });
+        // return NextResponse.json({ ok: true });
 
     } catch (err) {
         console.error('cannot insert data', err)

@@ -16,7 +16,7 @@ export default function IncomesView() {
 
 
   useEffect(() => {
-    if (incomes.length) {
+   if (incomes.length && spends.length) {
       setLoader(false)
       return
     }

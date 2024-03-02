@@ -35,14 +35,15 @@ export async function GET() {
     });
 
 
-    await axios.post(url + 'Гуд Морнинг')
+    const msgRes = await axios.post(url + 'Гуд Морнинг')
+    // console.log()
     await axios.post(url + 'Вот что нужно оплатить на ближайшие 7 дней')
     for (let i = 0; i < message.length; i++) {
         await axios.post(url + message[i])
 
     }
     const timeEnd = Date.now()
-    return Response.json({ datetime: timeEnd - timeStart });
+    return Response.json({ datetime: timeEnd - timeStart, msg: msgRes });
     // const result = await fetch(
     //     'http://worldtimeapi.org/api/timezone/America/Chicago',
     //     {

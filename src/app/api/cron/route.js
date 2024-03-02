@@ -1,10 +1,8 @@
 import msgService from "../../../lib/msg.service";
 // // import { NextResponse } from "next/server";
-// import axios from "axios";
-// 0 12 * * *
-export function GET() {
+import axios from "axios";
+export async function GET() {
     const res = msgService.sendMsg()
-    console.log(res)
     // const url = 'https://api.telegram.org/bot6587081386:AAEFpKmoTbj52EpWirs8WTN33I4VCqC6fdw/sendMessage?chat_id=555207329&text=';
     // const collectionName = 'Spends'
     // const client = await clientPromise;
@@ -36,8 +34,7 @@ export function GET() {
     // });
 
 
-    // await axios.post(url + 'Гуд Морнинг')
-    // // console.log()
+    await axios.post(url + 'Гуд Морнинг')
     // await axios.post(url + 'Вот что нужно оплатить на ближайшие 7 дней')
     // for (let i = 0; i < message.length; i++) {
     //     await axios.post(url + message[i])

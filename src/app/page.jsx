@@ -13,7 +13,7 @@ export default function HomeView() {
   const [spends, setSpends] = useState([])
   const [showModal, setShowModal] = useState(null)
   const [loader, setLoader] = useState(true)
-
+console.log(new Date())
   useEffect(() => {
     if (incomes.length && spends.length) {
       setLoader(false)

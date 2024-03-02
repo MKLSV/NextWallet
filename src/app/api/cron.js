@@ -1,4 +1,4 @@
-import clientPromise from "../../../lib/mongodb";
+import clientPromise from "../../lib/mongodb";
 import { NextResponse } from "next/server";
 import axios from "axios";
 // 0 12 * * *

@@ -42,6 +42,7 @@ async function sendMsg() {
          axios.post(url + message[i])
 
     }
+    return 'ok'
 
 }
 

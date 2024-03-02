@@ -3,7 +3,8 @@ import msgService from "../../../lib/msg.service";
 // import axios from "axios";
 // 0 12 * * *
 export function GET() {
-    msgService.sendMsg()
+    const res = msgService.sendMsg()
+    console.log(res)
     // const url = 'https://api.telegram.org/bot6587081386:AAEFpKmoTbj52EpWirs8WTN33I4VCqC6fdw/sendMessage?chat_id=555207329&text=';
     // const collectionName = 'Spends'
     // const client = await clientPromise;

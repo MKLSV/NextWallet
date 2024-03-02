@@ -36,10 +36,10 @@ async function sendMsg() {
         return `${val.title} ${val.price} ${date || ''}`;
     });
 
-    await axios.post(url + 'Гуд Морнинг')
-    await axios.post(url + 'Вот что нужно оплатить на ближайшие 7 дней')
+     axios.post(url + 'Гуд Морнинг')
+     axios.post(url + 'Вот что нужно оплатить на ближайшие 7 дней')
     for (let i = 0; i < message.length; i++) {
-        await axios.post(url + message[i])
+         axios.post(url + message[i])
 
     }
 

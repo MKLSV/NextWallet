@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { PieChart } from "../components/PieChart";
 import { Loader } from "../components/Loader";
 import { AddModal } from "../components/addModal.jsx";
-import axios from "axios";
+
 
 export default function HomeView() {
   const [wallet, setWallet] = useState({ wallet: 0, spendsCount: 0, incomesCount: 0 })
@@ -32,17 +32,6 @@ export default function HomeView() {
     fetchData()
   }, [])
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      // Code to be executed every 10 minutes
-      const url = 'https://api.telegram.org/bot6587081386:AAEFpKmoTbj52EpWirs8WTN33I4VCqC6fdw/sendMessage?chat_id=555207329&text=';
-      axios.post(url + 'Check')
-      console.log('Running every 10 minutes');
-    }, 1000 * 60 ); // 1000 milliseconds * 60 seconds * 10 minutes
-
-    // Clean up the interval when the component unmounts
-    // return () => clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     if (incomes.length && spends.length) {

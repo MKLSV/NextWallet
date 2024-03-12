@@ -69,7 +69,7 @@ export default function RootLayout({ children }) {
                   <span className='title'>Сумма</span>
                   <input type="number" value={input.price} id='price' onChange={(e) => handleChange(e)} />
                 </section>
-                <section className='modal-section'>
+                <section className={checked ? 'modal-section disabled' : 'modal-section'}>
                   <span className='title'>Число</span>
                   {checked ?
                     <input type="date" value={input.date} id='date' onChange={(e) => handleChange(e)} disabled />
@@ -86,7 +86,7 @@ export default function RootLayout({ children }) {
                     <label htmlFor="today">Сегодня</label>
                   }
                 </section>
-                <span>{error}</span>
+                <span className='error'>{error}</span>
               </div>
               <div className="add-footer">
                 <span>Сохранить?</span>

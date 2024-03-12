@@ -1,7 +1,7 @@
 main {
   min-height: 100dvh;
   // background-color: #222836;
-  font-size: 1em
+  font-size: 1em;
 }
 header {
   padding: 20px;
@@ -19,18 +19,15 @@ header {
 
 .home-container {
   // height: 100vh;
-  padding: 100px 0;
+  padding: 90px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  // gap: 5vh;
-  // justify-content: center;
-  // width: 100vw;
   height: 100dvh;
   .home-incomes {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 20px;
     width: 100vw;
     align-items: center;
     height: 35%;
@@ -39,10 +36,10 @@ header {
     .incomes-info {
       display: flex;
       // gap: 10px;
-      height: 65px;
+      height: 60px;
       width: 70vw;
       position: relative;
-      font-size: 1.8em;
+      font-size: 1.5em;
 
       .month {
         background-color: #2b93ce;
@@ -77,18 +74,18 @@ header {
     width: 100vw;
     align-items: center;
     justify-content: center;
-    height: 65%;
+    height: 80%;
     .spends-list {
       display: flex;
       flex-direction: column;
-      gap: 25px;
+      gap: 20px;
       .spend-info {
         display: flex;
         // gap: 10px;
-        height: 65px;
+        height: 60px;
         width: 80vw;
         position: relative;
-        font-size: 1.8em;
+        font-size: 1.5em;
       }
 
       .type {
@@ -115,8 +112,8 @@ header {
       .spend {
         position: absolute;
         height: 100%;
-        left: 40%;
-        width: 60%;
+        left: 35%;
+        width: 63%;
         background-color: #32394b;
         display: flex;
         justify-content: center;

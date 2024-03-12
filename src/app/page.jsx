@@ -1,19 +1,17 @@
-"use client"
-
-import { useEffect, useState } from "react";
-import dbService from "../lib/db.service";
+'use client'
 import Link from 'next/link'
-import { PieChart } from "../components/PieChart";
-import { Loader } from "../components/Loader";
-import { AddModal } from "../components/addModal.jsx";
+import dbService from "../lib/db.service";
+import { Loader } from "../cmps/Loader";
+import { useEffect, useState } from 'react';
+// import './home.scss';
 
+export default function Home() {
 
-export default function HomeView() {
-  const [wallet, setWallet] = useState({ wallet: 0, spendsCount: 0, incomesCount: 0 })
+  const [loader, setLoader] = useState(true)
   const [incomes, setIncomes] = useState([])
   const [spends, setSpends] = useState([])
-  const [showModal, setShowModal] = useState(null)
-  const [loader, setLoader] = useState(true)
+  const [spendsList, setSpendsList] = useState({ high: 0, medium: 0, low: 0 })
+  const [incomeWallet, setIncomeWallet] = useState(0)
 
   useEffect(() => {
     if (incomes.length && spends.length) {
@@ -21,66 +19,102 @@ export default function HomeView() {
       return
     }
     const fetchData = async () => {
-
       const loadIncomes = await dbService.getData("Incomes")
       const loadSpends = await dbService.getData("Spends")
       console.log(loadIncomes)
       if (loadIncomes !== undefined) setIncomes(loadIncomes)
       if (loadSpends !== undefined) setSpends(loadSpends)
       setLoader(false)
+  }
+  fetchData()
+}, [])
+
+useEffect(() => {
+  if (incomes.length && spends.length) {
+      setLoader(false)
+      const currentMonth = new Date().getMonth() + 1;
+      const itemsThisMonth = incomes
+        .map(income => {
+          const [year, month, day] = income.date.split('-').map(Number);
+          return { ...income, month };
+        })
+        .filter(({ month }) => month === currentMonth);
+      console.log(itemsThisMonth);
+      const incomesThisMonth = itemsThisMonth.reduce(
+        (total, { price }) => total + parseInt(price), 0
+      );
+      setIncomeWallet(incomesThisMonth);
+      getSortedSpends()
     }
-    fetchData()
-  }, [])
+  }, [incomes, spends]);
 
 
-  useEffect(() => {
-    if (incomes.length && spends.length) {
+  function getSortedSpends() {
+    let highPriority = []
+    let mediumPriority = []
+    let lowPriority = []
+    let check
 
-      const incomesWallet = incomes.reduce((total, income) => total + parseInt(income.price), 0);
-      const spendsWallet = spends.reduce((total, spend) => total + parseInt(spend.price), 0);
-      const enlistedWallet = spends.reduce((total, spend) => total + parseInt(spend.enlisted), 0);
-      setWallet({ wallet: incomesWallet - enlistedWallet, spendsCount: spendsWallet, incomesCount: incomesWallet })
-    }
-  }, [incomes, spends])
-
-
-  function calculateProcent(type) {
-    if (type === 'income') {
-      if (wallet.incomesCount === 0) return '0%'
-      return ((((wallet.incomesCount + wallet.spendsCount) / wallet.spendsCount) * 100) + "%")
-    }
-    else {
-      if (wallet.spendsCount === 0) return '0%'
-      return ((((wallet.incomesCount + wallet.spendsCount) / wallet.incomesCount) * 100) + "%")
-    }
+    spends.map((item) => {
+      check = checkPriority(item.date)
+      if (check === 'high') highPriority.push(item)
+      if (check === 'medium') mediumPriority.push(item)
+      if (check === 'low') lowPriority.push(item)
+    })
+    const high = highPriority.reduce((total, { price }) => total + parseInt(price), 0);
+    const medium = mediumPriority.reduce((total, { price }) => total + parseInt(price), 0);
+    const low = lowPriority.reduce((total, { price }) => total + parseInt(price), 0);
+    setSpendsList({ high, medium, low })
   }
 
+  function checkPriority(date) {
+    const diff = new Date(date).getTime() - Date.now()
+    if (diff < 604800000) return 'high'
+    if (diff < 604800000 * 2) return 'medium'
+    if (date === 'Не горит') return 'no'
+    if (date === 'done') return 'done'
+    return 'low'
+  }
+
+  if(loader) return <Loader/>
+
   return (
-    <div className="home-view">
-      {loader ? <Loader /> : ''}
-      {showModal === 'income' ? <AddModal setLoader={setLoader} setShowModal={setShowModal} showModal={showModal} setData={setIncomes} /> : ''}
-      {showModal === 'spend' ? <AddModal setLoader={setLoader} setShowModal={setShowModal} showModal={showModal} setData={setSpends} /> : ''}
-      <div className="app-header">
-        <Link className='incomes' href='/incomes'>Доходы</Link>
-        <Link className='spends' href='/spends'>Расходы</Link>
-      </div>
-      <PieChart incomesCount={wallet.incomesCount} spendsCount={wallet.enlistedWallet} />
-      <div className="wallet-container">
-        <span>Кошелек</span>
-        <div className="wallet">
-          <button className="add-income" onClick={() => (setShowModal('income'))}>+</button>
-          <span>{wallet.wallet} P</span>
-          <button className="add-spend" onClick={() => (setShowModal('spend'))}>+</button>
+    <main className="app">
+      <header>
+        <span>WalletApp</span>
+      </header>
+      <div className="home-container">
+
+        <div className="home-incomes">
+          <Link href='/incomes' className="link-btn">Доходы</Link>
+          <div className="incomes-info">
+            <span className="month">
+              Maй
+            </span>
+            <span className="month-incomes">
+              {incomeWallet}p
+            </span>
+          </div>
         </div>
-        <div className="wallet-bar">
-          {/* <div className="income-bar" ></div> */}
-          <div className="income-bar" style={{ width: calculateProcent('income') }}></div>
-          <div className="middle-bar"></div>
-          {/* <div className="spend-bar" ></div> */}
-          <div className="spend-bar" style={{ width: calculateProcent('spend') }}></div>
+
+        <div className="home-spends">
+          <Link href='/spends' className="link-btn">Расходы</Link>
+          <div className="spends-list">
+            <div className="spend-info">
+              <span className="type red">Срочно</span>
+              <span className="spend">{spendsList.high}р</span>
+            </div>
+            <div className="spend-info">
+              <span className="type orange">Терпит</span>
+              <span className="spend">{spendsList.medium}р</span>
+            </div>
+            <div className="spend-info">
+              <span className="type green">Не горит</span>
+              <span className="spend">{spendsList.low}р</span>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
-

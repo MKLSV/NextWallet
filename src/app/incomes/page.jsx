@@ -1,74 +1,90 @@
-"use client"
+'use client'
 
-import { useEffect, useState } from "react";
-import Link from 'next/link'
-import { IoArrowBackOutline } from "react-icons/io5";
-import dbService from "../../lib/db.service";
-import { Loader } from "../../components/Loader";
-import { SelectedIncomeModal } from "../../components/SelectedIncomeModal";
+import { useEffect, useState } from "react"
+import dbService from "../../lib/db.service"
+import { Loader } from "../../cmps/Loader"
+import { SelectedIncomeModal } from "./SelectedIncomeModal";
 
 export default function IncomesView() {
-  const [incomeWallet, setIncomeWallet] = useState(0)
-  const [showModal, setShowModal] = useState(false)
-  const [selectedIncome, setSelectedIncome] = useState(null)
-  const [loader, setLoader] = useState(true)
-  const [incomes, setIncomes] = useState([])
+    const [selectedIncome, setSelectedIncome] = useState(null)
+    const [incomesList, setIncomesList] = useState([])
+    const [loader, setLoader] = useState(true)
+    const [incomes, setIncomes] = useState([])
 
+    useEffect(() => {
+        if (incomes.length) {
+            getincomesList()
+            setLoader(false)
+            return
+        }
+        const fetchData = async () => {
+            const loadIncomes = await dbService.getData("Incomes")
+            setIncomes(loadIncomes)
+            setLoader(false)
+        }
+        fetchData()
+    }, [])
 
-  useEffect(() => {
-   if (incomes.length && spends.length) {
-      setLoader(false)
-      return
+    useEffect(() => {
+        getincomesList()
+    }, [incomes])
+
+    function getincomesList() {
+        const sortedData = incomes.reduce((acc, item) => {
+            const date = new Date(item.date);
+            const monthName = date.toLocaleString('ru-RU', { month: 'long' });
+
+            if (!acc[monthName]) {
+                acc[monthName] = { name: monthName, items: [] };
+            }
+
+            acc[monthName].items.push(item);
+
+            return acc;
+        }, {});
+        const sortedDataArray = Object.values(sortedData);
+        setIncomesList(sortedDataArray)
     }
-    const fetchData = async () => {
-      const loadIncomes = await dbService.getData("Incomes")
-      setIncomes(loadIncomes)
-      setLoader(false)
+    function getMonthWallet(arr) {
+        const wallet = arr.items.reduce((total, { price }) => total + parseInt(price), 0)
+        return wallet
     }
-    fetchData()
-  }, [])
 
-  useEffect(() => {
-    if (incomes.length) {
-      const newWallet = incomes.reduce((total, income) => total + parseInt(income.price), 0);
-      setIncomeWallet(newWallet)
+    function formatDate(inputDate) {
+        const [year, month, day] = inputDate.split('-');
+        const formattedYear = year.slice(-2);
+        return `${day}.${month}.${formattedYear}`;
     }
-  }, [incomes])
 
-  function onSelectedIncome(id) {
-    const selected = incomes.find(item => item._id === id)
-    setSelectedIncome(selected)
-  }
+    function onSelectedIncome(id) {
+        const selected = incomes.find(item => item._id === id)
+        setSelectedIncome(selected)
+    }
 
-
-  return (
-    <div className="list-container">
-      {loader ? <Loader /> : ''}
-      {selectedIncome ? <SelectedIncomeModal setLoader={setLoader} selectedIncome={selectedIncome} setSelectedIncome={setSelectedIncome} incomes={incomes} setIncomes={setIncomes} /> : ''}
-      <div className="header">
-        <div className="title">
-          <Link className='back' href='/'><IoArrowBackOutline /></Link>
-        </div>
-        <div className="wallet">
-          <span>Доходы: </span>
-          <span>{incomeWallet} P</span>
-        </div>
-      </div>
-      {incomes && incomes.length ?
-        <div className="list-group" >
-          {incomes.map((item, index) => (
-            <div className="list-item" key={index} onClick={() => onSelectedIncome(item._id)}>
-              <span className="item">{item.title}</span>
-              <span className="item">{item.price}p</span>
+    if (loader) return <Loader />
+    return (
+        <div className="wallet-info">
+            {selectedIncome? <SelectedIncomeModal setLoader={setLoader} selectedIncome={selectedIncome} setSelectedIncome={setSelectedIncome} incomes={incomes} setIncomes={setIncomes}/> : ''}
+            <header>Доходы</header>
+            <div className="wallet-list">
+                {incomesList.map(monthItems =>
+                    <div className="list" key={monthItems.name}>
+                        <div className="header">
+                            <span className="month-name">{monthItems.name}</span>
+                            <span>{getMonthWallet(monthItems)}р</span>
+                        </div>
+                        {monthItems.items.map(item => (
+                            <div className="item-container" key={item._id}>
+                                <div className="item" onClick={() => onSelectedIncome(item._id)}>
+                                    <span>{item.title}</span>
+                                    <span className="date">{formatDate(item.date)}</span>
+                                    <span className="spend">{item.price}p</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
-          ))}
-          {/* <button onClick={() => setShowModal(true)}>Добавить</button> */}
         </div>
-        :
-        <div className="add-btn" onClick={() => setShowModal(true)}>
-          <span>+</span>
-        </div>
-      }
-    </div>
-  )
+    )
 }

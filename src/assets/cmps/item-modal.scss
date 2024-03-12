@@ -1,0 +1,18 @@
+.modal-container{
+    .modal-section{
+        &.edit{
+            border: none;
+            border-radius: 0;
+            border-bottom: 1px solid white;
+        }
+    }
+    button{
+        width: 85%;
+        height: 40px;
+        font-size: 20px;
+        border: none;
+        border-radius: 10px;
+        background-color: #222836b9;
+        color: white;
+    }
+}

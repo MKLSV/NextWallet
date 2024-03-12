@@ -1,0 +1,126 @@
+footer {
+  padding: 20px 50px;
+  font-size: 35px;
+  border-top: 3px solid white;
+  background-color: #32394b;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  width: 100vw;
+  bottom: 0;
+  box-shadow: 0px -4px 45px 1px black;
+
+  .home-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+  }
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #33333398;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: hidden;
+  z-index: 2;
+
+  .modal-container {
+    display: flex;
+    background-color: #32394b;
+    flex-direction: column;
+    padding: 35px 20px;
+    width: 85vw;
+    gap: 30px;
+    align-items: center;
+    border-radius: 15px;
+    box-shadow: 0 0 20px 1px black;
+    span {
+      font-size: 22px;
+    }
+    .inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 100%;
+    }
+    .modal-section {
+      height: 40px;
+      border: 1px solid white;
+      padding: 5px 15px;
+      position: relative;
+      border-radius: 11px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      // justify-content: end;
+
+      .title {
+        font-size: 18px;
+        position: absolute;
+        left: 10px;
+        background-color: #32394b;
+        top: -10px;
+        padding: 0 6px;
+      }
+
+      input {
+        height: 90%;
+        width: 100%;
+        font-size: 18px;
+        border: none;
+        background: transparent;
+        text-align: end;
+        color: white;
+        &:focus {
+          background: transparent;
+          // background-color: #781f9e2e;
+          outline: white;
+        }
+        &.disabled {
+          background-color: #98989892;
+        }
+      }
+      
+      .value{
+        height: 90%;
+        width: 100%;
+        font-size: 19px;
+        border: none;
+        background: transparent;
+        text-align: end;
+        color: white;
+
+      }
+      input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+        color: white;
+      }
+    }
+
+    .add-footer {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+      padding: 10px;
+      .add-btns {
+        padding: 5px;
+        width: 75%;
+        display: flex;
+        justify-content: space-between;
+        font-size: 38px;
+      }
+    }
+  }
+}

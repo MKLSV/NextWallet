@@ -3,11 +3,13 @@ import { IoClose } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { FaRegEdit } from "react-icons/fa";
-import dbService from "../lib/db.service";
+import { FaRegTrashCan } from "react-icons/fa6"
+import { FaRegPenToSquare } from "react-icons/fa6"
+import dbService from "../../lib/db.service";
 
 export function SelectedSpendModal({ setLoader, setSelectedSpend, selectedSpend, setSpends, spends }) {
 
-    const [deleteModal, setDeleteModal] = useState(false)
+    const [deleteItem, setDeleteItem] = useState(false)
     const [editItem, setEditItem] = useState(false)
     const [editedItem, setEditedItem] = useState({ ...selectedSpend })
     const [newEnliste, setNewEnliste] = useState(null)
@@ -24,23 +26,17 @@ export function SelectedSpendModal({ setLoader, setSelectedSpend, selectedSpend,
         const value = event.target.value
         setEditedItem((prev) => ({ ...prev, [name]: value }))
     }
-    function handleEnliste(event) {
-        const value = event.target.value
-        if (value > parseInt(editedItem.price)) setNewEnliste(editedItem.price)
-        else {
-            setNewEnliste(parseInt(value))
-        }
-    }
+
     async function saveChanges(itemToSave, type) {
         setEditItem(false)
         setLoader(true)
-        if(type === 'enliste'){
+        if (type === 'enliste') {
             await dbService.updateData(itemToSave, 'Spends')
             const updatedSpends = spendsToUpdate.map(spend =>
                 spend._id === itemToSave._id ? { ...itemToSave } : spend
             );
             setSpends(updatedSpends)
-        }else {
+        } else {
             await dbService.updateData(editedItem, 'Spends')
             const updatedSpends = spendsToUpdate.map(spend =>
                 spend._id === editedItem._id ? { ...editedItem } : spend
@@ -50,7 +46,7 @@ export function SelectedSpendModal({ setLoader, setSelectedSpend, selectedSpend,
         setLoader(false)
         setSelectedSpend(null)
     }
-    async function deleteIncome() {
+    async function deleteSpend() {
         setLoader(true)
         await dbService.removeData(selectedSpend._id, "Spends")
         const updatedSpends = spendsToUpdate.filter(spend => spend._id !== selectedSpend._id)
@@ -60,65 +56,68 @@ export function SelectedSpendModal({ setLoader, setSelectedSpend, selectedSpend,
     }
 
     async function addNewEnliste() {
-        const newEditedItem = { ...editedItem, enlisted: parseInt(editedItem.price), date: 'done', closeAt: Date.now()}
+        const newEditedItem = { ...editedItem, enlisted: parseInt(editedItem.price), date: 'done', closeAt: Date.now() }
         setEditedItem(newEditedItem)
         saveChanges(newEditedItem, 'enliste')
     }
     console.log(editedItem)
 
     return (
-        <div className="item-modal" onClick={() => setSelectedSpend(null)}>
-            <div className="item-info" onClick={(e) => (e.stopPropagation())}>
-                <div className="item">
-                    <label>Источник</label>
+        <div className="modal" onClick={() => setSelectedSpend(null)}>
+            <div className="modal-container" onClick={(e) => (e.stopPropagation())}>
+                <div className={!editItem ? "modal-section edit" : "modal-section"}>
+                    <span className="title">Название</span>
                     {editItem ?
                         <input type="text" id="title" value={editedItem.title} onChange={(e) => handleChange(e)} />
                         :
-                        <span>{editedItem.title}</span>
+                        <span className="value">{editedItem.title}</span>
                     }
                 </div>
-                <div className="item">
-                    <label>Сумма</label>
+                <div className={!editItem ? "modal-section edit" : "modal-section"}>
+                    <span className="title">Сумма</span>
                     {editItem ?
                         <input type="text" id="price" value={editedItem.price} onChange={(e) => handleChange(e)} />
                         :
-                        <span>{editedItem.price}</span>
+                        <span className="value">{editedItem.price}</span>
                     }
 
                 </div>
-                {/* <div className="item">
-                    <label>Уже зачисленно</label>
-                    <span>{editedItem.enlisted}</span>
-                </div> */}
-                <div className="item">
-                    <label>Число</label>
+                <div className={!editItem ? "modal-section edit" : "modal-section"}>
+                    <span className="title">Число</span>
                     {editItem ?
                         <input type="date" id="date" value={editedItem.date} onChange={(e) => handleChange(e)} />
                         :
-                        <span>{editedItem.date}</span>
+                        <span className="value">{editedItem.date}</span>
                     }
                 </div>
 
-                <button className="add-spend-btn" onClick={addNewEnliste}>Выполнено</button>
-
                 {editItem ?
-                    <div className="btns">
-                        <FaCheck className="set" style={{ color: 'green' }} onClick={saveChanges} />
-                        <IoClose className="unset" style={{ color: 'red' }} onClick={() => setEditItem(false)} />
+                    <div className="add-footer">
+                        <span>Сохранить?</span>
+                        <div className="add-btns">
+                            <IoClose onClick={() => setEditItem(false)} />
+                            <FaCheck onClick={saveChanges}/>
+                        </div>
                     </div>
-                    :
-                    <div className={deleteModal ? "btns disabled" : "btns"}>
-                        <RiDeleteBin5Line onClick={() => setDeleteModal(true)} />
-                        <FaRegEdit onClick={onEdit} />
+                    
+                    : deleteItem ?
+                    <div className="add-footer">
+                        <span>Удалить?</span>
+                        <div className="add-btns">
+                            <IoClose onClick={() => setDeleteItem(false)} />
+                            <FaCheck  onClick={deleteSpend}/>
+                        </div>
+                    </div>
+                        :
+                    <div className="add-footer">
+                        <button onClick={addNewEnliste}>Оплачено</button>
+                        <div className="add-btns">
+                            <FaRegTrashCan  onClick={() => setDeleteItem(true)}/>
+                            <FaRegPenToSquare onClick={() => setEditItem(true)}/>
+                        </div>
                     </div>
                 }
-                <div className={deleteModal ? "delete-modal active" : "delete-modal"}>
-                    <span>ТОЧНО?</span>
-                    <div className="delete-modal-btns">
-                        <button className="yes" onClick={deleteIncome}>Ага</button>
-                        <button className="no" onClick={() => setDeleteModal(false)}>Не</button>
-                    </div>
-                </div>
+
             </div>
 
         </div>

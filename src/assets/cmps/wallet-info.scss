@@ -1,0 +1,90 @@
+.wallet-info {
+  .time-options {
+    width: 90vw;
+    display: flex;
+    gap: 20px;
+    span {
+      text-align: center;
+      border-radius: 20px;
+      width: 30%;
+      padding: 5px;
+      border: 1px solid white;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &.active {
+        border: 3px solid white;
+        font-weight: 600;
+      }
+    }
+  }
+  .wallet-list {
+    padding: 100px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100dvh;
+    font-size: 20px;
+    gap: 30px;
+
+    .list {
+      width: 90vw;
+      background-color: #32394b;
+      border-radius: 10px;
+      padding-bottom: 15px;
+
+      .header {
+        // border: 3px solid white;
+        padding: 10px 15px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        border-bottom: 2px solid white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 700;
+        background-color: #b7b7b737;
+        
+        .month-name {
+          text-transform: capitalize;
+        }
+
+        &.red {
+          background-color: #ce2b2bd3;
+        }
+        &.orange {
+          background-color: #ce542bd2;
+        }
+        &.green {
+          background-color: #0f987acd;
+        }
+        &.grey {
+          background-color: #787878cd;
+        }
+      }
+      .item-container {
+        padding: 10px 15px;
+        .item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          border-bottom: 1px solid white;
+          padding: 5px 0;
+          cursor: pointer;
+          span {
+            width: 33.33%;
+            overflow-wrap: break-word;
+            &.date {
+              text-align: center;
+            }
+            &.spend {
+              text-align: end;
+            }
+          }
+        }
+      }
+    }
+  }
+}

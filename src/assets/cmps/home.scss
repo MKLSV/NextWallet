@@ -51,6 +51,7 @@ header {
         justify-content: center;
         align-items: center;
         width: 35%;
+        text-transform: capitalize;
       }
 
       .month-incomes {
@@ -134,6 +135,8 @@ header {
     border-radius: 15px;
     transition: 0.4s;
     cursor: pointer;
+    box-shadow: 0 0 20px 0px black;
+
     
     &:hover{
     background-color: #585e74;

@@ -12,6 +12,8 @@ export default function Home() {
   const [spends, setSpends] = useState([])
   const [spendsList, setSpendsList] = useState({ high: 0, medium: 0, low: 0 })
   const [incomeWallet, setIncomeWallet] = useState(0)
+  const date = new Date();
+  const shortMonthName = date.toLocaleString('ru-RU', { month: 'short' });
 
   useEffect(() => {
     if (incomes.length && spends.length) {
@@ -25,12 +27,12 @@ export default function Home() {
       if (loadIncomes !== undefined) setIncomes(loadIncomes)
       if (loadSpends !== undefined) setSpends(loadSpends)
       setLoader(false)
-  }
-  fetchData()
-}, [])
+    }
+    fetchData()
+  }, [])
 
-useEffect(() => {
-  if (incomes.length && spends.length) {
+  useEffect(() => {
+    if (incomes.length && spends.length) {
       setLoader(false)
       const currentMonth = new Date().getMonth() + 1;
       const itemsThisMonth = incomes
@@ -76,7 +78,7 @@ useEffect(() => {
     return 'low'
   }
 
-  if(loader) return <Loader/>
+  if (loader) return <Loader />
 
   return (
     <main className="app">
@@ -89,7 +91,7 @@ useEffect(() => {
           <Link href='/incomes' className="link-btn">Доходы</Link>
           <div className="incomes-info">
             <span className="month">
-              Maй
+              {shortMonthName}
             </span>
             <span className="month-incomes">
               {incomeWallet}p

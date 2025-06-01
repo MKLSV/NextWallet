@@ -1,7 +1,7 @@
 main {
   min-height: 100dvh;
   // background-color: #222836;
-  font-size: 1em;
+  font-size: 1rem;
 }
 header {
   padding: 20px;
@@ -19,6 +19,7 @@ header {
 
 .home-container {
   // height: 100vh;
+  font-size: 1rem;
   padding: 90px 0;
   display: flex;
   flex-direction: column;
@@ -39,8 +40,7 @@ header {
       height: 60px;
       width: 70vw;
       position: relative;
-      font-size: 1.5em;
-
+      
       .month {
         background-color: #2b93ce;
         height: 100%;
@@ -86,7 +86,6 @@ header {
         height: 60px;
         width: 80vw;
         position: relative;
-        font-size: 1.5em;
       }
 
       .type {
@@ -131,7 +130,6 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.7em;
     border-radius: 15px;
     transition: 0.4s;
     cursor: pointer;
